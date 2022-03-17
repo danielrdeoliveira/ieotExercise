@@ -13,7 +13,12 @@ class TestEmployee:
                                  {'Day': 'SU', 'Start': '20:00', 'End': '21:00'}])
         assert new_employee.payment == 215
 
-    def test_validation_is_correct(self):
+    def test_hours(self):
         with pytest.raises(Exception) as exc:
             new_employee = Employee("fake_name", "")
             assert "Invalid hours" in str(exc)
+
+    def test_schedule_is_correct(self):
+        with pytest.raises(Exception) as exc:
+            new_employee = Employee("fake_name", [{'Day': 'MO', 'Start': '10:00', 'End': '09:00'}])
+            assert "Schedule error for fake_name on MO" in str(exc)
