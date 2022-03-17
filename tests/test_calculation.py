@@ -22,3 +22,8 @@ class TestEmployee:
         with pytest.raises(Exception) as exc:
             new_employee = Employee("fake_name", [{'Day': 'MO', 'Start': '10:00', 'End': '09:00'}])
             assert "Schedule error for fake_name on MO" in str(exc)
+
+    def test_begins_at_00(self):
+        with pytest.raises(Exception) as exc:
+            new_employee = Employee("fake_name", [{'Day': 'MO', 'Start': '00:00', 'End': '09:00'}])
+            assert "Schedule must begin after 00:00h" in str(exc)
