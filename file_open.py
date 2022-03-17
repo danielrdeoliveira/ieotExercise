@@ -3,26 +3,30 @@ import re
 
 class File:
 
-    def read_employees(self, filename):
+    @classmethod
+    def read_employees(cls, filename):
 
         with open(filename, mode='r') as f:
             employee_dic = {}
 
-            for line in self.drop_blank_lines(f):
+            for line in cls.drop_blank_lines(f):
                 day_array = []
 
                 try:
                     (name, all_schedules) = line.split('=')
                 except ValueError:
-                    print('Invalid input format')
+                    print("Invalid input format: = sign")
                 else:
                     if name in employee_dic.keys():
-                        raise Exception('Error: repeated employee name')
+                        raise Exception("Error: repeated employee name")
 
                     for x in all_schedules.split(","):
-                        day_schedule = re.match(r'(?P<Day>[A-Za-z]+)(?P<Start>\d+:\d+)-(?P<End>\d+:\d+)', x)
-                        group_day = day_schedule.groupdict()
-                        day_array.append(group_day)
+                        try:
+                            day_schedule = re.match(r'(?P<Day>[A-Za-z]+)(?P<Start>\d+:\d+)-(?P<End>\d+:\d+)', x)
+                            group_day = day_schedule.groupdict()
+                            day_array.append(group_day)
+                        except ValueError:
+                            print("Invalid input format: Day, Start or End")
 
                     employee_dic[name] = day_array
 
