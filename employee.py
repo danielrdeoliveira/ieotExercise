@@ -2,6 +2,17 @@ from datetime import datetime
 
 
 class Employee:
+    """ Class for the employee;
+        it receives the name and array of dicts for the hours worked.
+        Its methods are the calculation of the payments and verification of the hours
+
+        In order to assist the calculation, some interval edges are established (datetime),
+        a dictionary converting the days into numbers
+        and a dictionary for the wages, transformed to hours (divided by 60),
+        from 1 to 6, referencing, respectively, the intervals 1, 2 and 3 for Monday to Friday
+        and 1, 2 and 3 for Saturday and Sunday.
+    """
+
     name = None
     payment = None
     interval_edge_1 = datetime(year=1900, month=1, day=1, hour=9, minute=1)
@@ -12,9 +23,17 @@ class Employee:
     def __init__(self, name, hours_worked):
         self.name = name
         self.hours_worked = hours_worked
-        self.payment = self.calculate_hours()
+        self.payment = self.calculate_payment()
 
-    def calculate_hours(self):
+    def calculate_payment(self):
+        """
+        After passing a validation that the hours are in the correct form,
+        a calculation of the payment will be made iterating through the array of worked hours,
+        associating it with the intervals and wages(converted to minutes).
+
+        :return: it returns an integer, round (2 decimals)
+        representing the payment the employee should receive.
+        """
         self.validate_hours()
 
         aux_pay = 0
@@ -51,6 +70,15 @@ class Employee:
         return round(aux_pay, 2)
 
     def validate_hours(self):
+        """
+        method designed to validate the array of hours worked.
+        checks if the array is null;
+        if, in a given day, the schedule ends before it starts;
+        if, in a given day, the schedule starts at 00:00 (min should be 00:01).
+        if any problems are found, an exception is raised.
+        :return: nothing.
+        """
+
         if self.hours_worked == "":
             raise Exception("Invalid hours")
 
