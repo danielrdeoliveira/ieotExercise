@@ -61,3 +61,6 @@ class Employee:
 
             if day_end < day_start:
                 raise Exception("Schedule error for {} on {}".format(self.name, day_hours["Day"]))
+
+            if day_start.hour == 0 and day_start.minute == 0:
+                raise Exception("Schedule must begin after 00:00h")
