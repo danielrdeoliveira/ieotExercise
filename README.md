@@ -1,5 +1,5 @@
-# ieotExercise
-Exercise proposed by ieot.
+# ioetExercise
+Exercise proposed by ioet.
 
 Given a text file ("schedules.txt") containing the names and the schedule for worked hours of the employees, the program reads the file, iterates through it and then calculates the payment for each employee.
 
